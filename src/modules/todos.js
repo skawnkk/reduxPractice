@@ -1,5 +1,5 @@
-const ADD_TODO = 'todos/ADD_TODO';
-const TOGGLE_TODO = 'todos/TOGGLE_TODO';
+const ADD_TODO = "todos/ADD_TODO";
+const TOGGLE_TODO = "todos/TOGGLE_TODO";
 
 let nextId = 1;
 export const addTodo = (text) => ({
@@ -7,14 +7,14 @@ export const addTodo = (text) => ({
   todo: {
     id: nextId++,
     text,
+    done: false,
   },
 });
 export const toggleTodo = (id) => ({ type: TOGGLE_TODO, id });
 
-const initialState = []; //{id: text: done:}
-
+const initialState = []; //[{id:1, text:'ex', done:false}]
 export default function todos(state = initialState, action) {
-  switch (state.action) {
+  switch (action.type) {
     case ADD_TODO:
       return state.concat(action.todo);
     case TOGGLE_TODO:
