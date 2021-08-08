@@ -1,7 +1,7 @@
-import React from 'react';
-import Counter from '../componenets/Counter';
-import { useSelector, useDispatch } from 'react-redux';
-import { decrease, increase, setDiff } from '../modules/counter';
+import React from "react";
+import Counter from "../componenets/Counter";
+import { useSelector, useDispatch } from "react-redux";
+import { decrease, increase, setDiff } from "../modules/counter";
 
 /* store.getState() => useSelector의 state
 	{
