@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 function Counter({ number, diff, onIncrease, onDecrease, onSetDiff }) {
   const onChange = (e) => onSetDiff(parseInt(e.target.value, 10));
@@ -7,7 +7,7 @@ function Counter({ number, diff, onIncrease, onDecrease, onSetDiff }) {
     <div>
       <h1>{number}</h1>
       <div>
-        <input type='number' value={diff} onChange={onChange} />
+        <input type="number" value={diff} onChange={onChange} />
         <button onClick={onIncrease}>+</button>
         <button onClick={onDecrease}>-</button>
       </div>

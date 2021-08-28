@@ -20,6 +20,7 @@ const TodoList = React.memo(function TodoList({ todos, onToggle }) {
     </ul>
   );
 });
+
 function Todos({ todos, onCreate, onToggle }) {
   const [text, setText] = useState("");
   const onChange = (e) => setText(e.target.value);
