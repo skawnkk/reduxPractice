@@ -38,6 +38,35 @@ export const handleAsyncActions = (type, key, keepData) => {
   };
   return reducer;
 };
+export const handleAsyncActionsById = (type, key, keepData) => {
+  const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
+  const reducer = (state, action) => {
+    const id = action.meta;
+    switch (action.type) {
+      case type:
+        return {
+          ...state,
+          [key]: {
+            ...state[key],
+            [id]: loading(keepData ? state[key][id]?.data : null),
+          },
+        };
+      case SUCCESS:
+        return {
+          ...state,
+          [key]: { ...state[key], [id]: success(action.payload) },
+        };
+      case ERROR:
+        return {
+          ...state,
+          [key]: { ...state[key], [id]: error(action.error) },
+        };
+      default:
+        return state;
+    }
+  };
+  return reducer;
+};
 export const createPromiseThunk = (type, promiseCreator) => {
   const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
   const thunkCreator = (param) => async (dispatch) => {
@@ -47,6 +76,26 @@ export const createPromiseThunk = (type, promiseCreator) => {
       dispatch({ type: SUCCESS, payload });
     } catch (e) {
       dispatch({ type: ERROR, payload: e, error: true });
+    }
+  };
+  return thunkCreator;
+};
+
+const defaultIdSelector = (param) => param;
+export const createPromiseThunkById = (
+  type,
+  promiseCreator,
+  idSelector = defaultIdSelector
+) => {
+  const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
+  const thunkCreator = (param) => async (dispatch) => {
+    const id = idSelector(param);
+    dispatch({ type, meta: id });
+    try {
+      const payload = await promiseCreator(param);
+      dispatch({ type: SUCCESS, payload, meta: id });
+    } catch (e) {
+      dispatch({ type: ERROR, payload: e, error: true, meta: id });
     }
   };
   return thunkCreator;
