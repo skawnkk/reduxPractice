@@ -10,7 +10,7 @@ export default function PostListContainer() {
     dispatch(getPosts());
   }, [dispatch]);
 
-  if (loading) return <div>로딩 중 ....</div>;
+  if (loading && !data) return <div>로딩 중 ....</div>;
   if (error) return <div>에러발생</div>;
   if (!data) return null;
   return <PostList posts={data} />;
